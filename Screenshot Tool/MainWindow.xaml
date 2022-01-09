@@ -1,0 +1,27 @@
+﻿<Window x:Class="Screenshot_Tool.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid MouseLeftButtonDown="imageBox_mouseLeftButtonDown" MouseLeftButtonUp="imageBox_mouseLeftButtonUp" MouseMove="imageBox_mouseMove">
+        <Image x:Name="imageBox" HorizontalAlignment="Left" Margin="212,217,0,0" VerticalAlignment="Top" Panel.ZIndex="-5">
+
+            <Image.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="繪圖">
+                        <MenuItem Header="畫筆"/>
+                        <MenuItem Header="文字"/>
+                    </MenuItem>
+                    <MenuItem Header="複製" InputGestureText="Ctrl+C" Click="menuItem_ClickCopy"/>
+                    <MenuItem Header="儲存到..." InputGestureText="Ctrl+S" Click="MenuItem_Click_Save"/>
+                    <Separator/>
+
+                </ContextMenu>
+            </Image.ContextMenu>
+        </Image>
+        <Rectangle x:Name="rectangle" HorizontalAlignment="Left" Height="0" Margin="212,164,0,0" Stroke="Black" VerticalAlignment="Top" Width="0" Panel.ZIndex="1"/>
+        <Label x:Name="labelSize" Content="Label" HorizontalAlignment="Left" Margin="314,172,0,0" VerticalAlignment="Top" Panel.ZIndex="2" Background="#FF757070" Foreground="White" RenderTransformOrigin="0.5,0.5" FontSize="8" Visibility="Hidden"/>
+    </Grid>
+</Window>
