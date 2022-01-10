@@ -27,34 +27,38 @@ namespace Screenshot_Tool
         {
             InitializeComponent();
 
+            ToolbarWindow toolbarWindow = new ToolbarWindow();
+            toolbarWindow.Show();
             ContextMenu contextMenu = new ContextMenu();
             contextMenu.MenuItems.Add("設定");
             contextMenu.MenuItems.Add("-");
-            contextMenu.MenuItems.Add("退出程式", onClikExit);
+            contextMenu.MenuItems.Add("退出程式", OnClikExit);
 
-            notifyIcon = new NotifyIcon();
-            notifyIcon.Visible = true;
-            notifyIcon.Icon = new Icon("Resources/screenshot.ico");
-            notifyIcon.Text = "擷取視窗螢幕";
-            notifyIcon.ContextMenu = contextMenu;
-            notifyIcon.MouseClick += onClickNotifyIcon;
+            notifyIcon = new NotifyIcon
+            {
+                Visible = true,
+                Icon = new Icon("Resources/screenshot.ico"),
+                Text = "擷取視窗螢幕",
+                ContextMenu = contextMenu
+            };
+            notifyIcon.MouseClick += OnClickNotifyIcon;
             Hide();
             ShowInTaskbar = false;
-            KeyDown += keyboardHandler;
-            HotKey _hotKey = new HotKey(Key.F8, 0, onHotKeyDown);
+            KeyDown += KeyboardHandler;
+            HotKey _hotKey = new HotKey(Key.F8, 0, OnHotKeyDown);
         }
 
-        private void onClickNotifyIcon(object sender, System.Windows.Forms.MouseEventArgs e)
+        private void OnClickNotifyIcon(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            func_screenshot();
+            Func_Screenshot();
         }
 
-        private void onClikExit(object sender, EventArgs e)
+        private void OnClikExit(object sender, EventArgs e)
         {
-            func_Exit();
+            Func_Exit();
         }
 
-        private void keyboardHandler(object sender, System.Windows.Input.KeyEventArgs e)
+        private void KeyboardHandler(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
             {
@@ -62,29 +66,29 @@ namespace Screenshot_Tool
                 labelSize.Visibility = Visibility.Hidden;
             }
             else if (e.Key == Key.C && Keyboard.IsKeyDown(Key.LeftCtrl))
-                func_copy();
+                Func_Copy();
             else if (e.Key == Key.S && Keyboard.IsKeyDown(Key.LeftCtrl))
-                func_save();
+                Func_Save();
             
         }
 
-        private void onHotKeyDown(HotKey obj) { func_screenshot(); }
+        private void OnHotKeyDown(HotKey obj) { Func_Screenshot(); }
 
-        private void imageBox_mouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void ImageBox_mouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             isMouseDown = false;
             if (rectangle.Width > 0 && rectangle.Height > 0)
                 imageBox.ContextMenu.IsOpen = true;
         }
 
-        private void imageBox_mouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void ImageBox_mouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             isMouseDown = true;
             startX = Control.MousePosition.X;
             startY = Control.MousePosition.Y;
         }
 
-        private void imageBox_mouseMove(object sender, System.Windows.Input.MouseEventArgs e)
+        private void ImageBox_mouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
             if (isMouseDown)
             {
@@ -96,7 +100,7 @@ namespace Screenshot_Tool
                 rectangle.Width = Math.Abs(rectWidth);
                 rectangle.Height = Math.Abs(rectHeight);
                 Point p = rectangle.TransformToAncestor(this).Transform(new Point(0, 0));
-                Bitmap bmp = replaceImage(imageBoxBMP, (int)p.X, (int)p.Y, (int)rectangle.Width, (int)rectangle.Height, screenBMP);
+                Bitmap bmp = ReplaceImage(imageBoxBMP, (int)p.X, (int)p.Y, (int)rectangle.Width, (int)rectangle.Height, screenBMP);
                 BitmapSource bitmapSource = Imaging.CreateBitmapSourceFromHBitmap(bmp.GetHbitmap(),
                                                     IntPtr.Zero,
                                                     Int32Rect.Empty,
@@ -108,7 +112,7 @@ namespace Screenshot_Tool
                 labelSize.Margin = rectangle.Margin;
             }
         }
-        private Bitmap replaceImage(Bitmap image, int x, int y, int width, int height, Bitmap imageSource)
+        private Bitmap ReplaceImage(Bitmap image, int x, int y, int width, int height, Bitmap imageSource)
         {
             Bitmap newBMP = (Bitmap)image.Clone();
             Point p = rectangle.TransformToAncestor(this).Transform(new Point(0, 0));
@@ -124,7 +128,7 @@ namespace Screenshot_Tool
             catch { }
             return newBMP;
         }
-        public static Bitmap decreaseBrightness(Bitmap Image)
+        public static Bitmap DecreaseBrightness(Bitmap Image)
         {
             LockBitmap lockbmp = new LockBitmap(Image);
             lockbmp.LockBits();
@@ -143,11 +147,11 @@ namespace Screenshot_Tool
             return Image;
         }
 
-        private void MenuItem_Click_Save(object sender, RoutedEventArgs e) { func_save(); }
+        private void MenuItem_Click_Save(object sender, RoutedEventArgs e) { Func_Save(); }
 
-        private void menuItem_ClickCopy(object sender, RoutedEventArgs e)  { func_copy(); }
+        private void MenuItem_Click_Copy(object sender, RoutedEventArgs e)  { Func_Copy(); }
 
-        private Bitmap getSelectedArea()
+        private Bitmap GetSelectedArea()
         {
             Point p = rectangle.TransformToAncestor(this).Transform(new Point(0, 0));
             Rectangle rect = new Rectangle((int)p.X, (int)p.Y, (int)rectangle.Width, (int)rectangle.Height);
@@ -155,11 +159,11 @@ namespace Screenshot_Tool
             return bmp;
         }
 
-        private void func_Exit()
+        private void Func_Exit()
         {
             System.Windows.Application.Current.Shutdown();
         }
-        private void func_screenshot()
+        private void Func_Screenshot()
         {
             isMouseDown = false;
             Rectangle rect = Screen.GetBounds(System.Drawing.Point.Empty);
@@ -167,7 +171,7 @@ namespace Screenshot_Tool
             Graphics g = Graphics.FromImage(screenBMP);
             g.CopyFromScreen(rect.Left, rect.Top, 0, 0, screenBMP.Size, CopyPixelOperation.SourceCopy);
             imageBoxBMP = (Bitmap)screenBMP.Clone();
-            decreaseBrightness(imageBoxBMP);
+            DecreaseBrightness(imageBoxBMP);
             BitmapSource bitmapSource = Imaging.CreateBitmapSourceFromHBitmap(imageBoxBMP.GetHbitmap(),
                                                 IntPtr.Zero,
                                                 Int32Rect.Empty,
@@ -185,25 +189,47 @@ namespace Screenshot_Tool
             Show();
         }
 
-        private void func_copy()
+        private void Func_Copy()
         {
-            Bitmap bmp = getSelectedArea();
+            Bitmap bmp = null;
+            try
+            {
+                bmp = GetSelectedArea();
+            }
+            catch (ArgumentException)
+            {
+                System.Windows.Forms.MessageBox.Show("無法複製", "錯誤", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             System.Windows.Clipboard.SetData(System.Windows.DataFormats.Bitmap, bmp);
             notifyIcon.ShowBalloonTip(1000, "螢幕截圖工具", "截圖成功！", ToolTipIcon.None);
+            Func_CloseScreenshot();
+        }
+        private void Func_Save()
+        {
+            Bitmap bmp = null;
+            try
+            {
+                bmp = GetSelectedArea();
+            }
+            catch (ArgumentException)
+            {
+                System.Windows.Forms.MessageBox.Show("無法存檔", "錯誤", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.Filter = "圖片檔PNG (*.png)|*.png";
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                bmp.Save(dialog.FileName, ImageFormat.Png);
+                notifyIcon.ShowBalloonTip(1000, "螢幕截圖工具", "已儲存到路徑：" + dialog.FileName, ToolTipIcon.None);
+            }
+            Func_CloseScreenshot();
+        }
+
+        private void Func_CloseScreenshot()
+        {
             Hide();
             labelSize.Visibility = Visibility.Hidden;
-        }
-        private void func_save()
-        {
-            
-            Bitmap bmp = getSelectedArea();
-            SaveFileDialog dialog = new SaveFileDialog();
-            dialog.Filter = "圖片檔PNG (*.png)";
-            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                notifyIcon.ShowBalloonTip(1000, "螢幕截圖工具", "已儲存到路徑：" + dialog.FileName, ToolTipIcon.None);
-            bmp.Save(dialog.FileName, ImageFormat.Png);
-            Hide();
-
+            imageBox.ContextMenu.IsOpen = false;
         }
     }
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid MouseLeftButtonDown="imageBox_mouseLeftButtonDown" MouseLeftButtonUp="imageBox_mouseLeftButtonUp" MouseMove="imageBox_mouseMove">
+    <Grid MouseLeftButtonDown="ImageBox_mouseLeftButtonDown" MouseLeftButtonUp="ImageBox_mouseLeftButtonUp" MouseMove="ImageBox_mouseMove">
         <Image x:Name="imageBox" HorizontalAlignment="Left" Margin="212,217,0,0" VerticalAlignment="Top" Panel.ZIndex="-5">
 
             <Image.ContextMenu>
@@ -14,7 +14,7 @@
                         <MenuItem Header="畫筆"/>
                         <MenuItem Header="文字"/>
                     </MenuItem>
-                    <MenuItem Header="複製" InputGestureText="Ctrl+C" Click="menuItem_ClickCopy"/>
+                    <MenuItem Header="複製" InputGestureText="Ctrl+C" Click="MenuItem_Click_Copy"/>
                     <MenuItem Header="儲存到..." InputGestureText="Ctrl+S" Click="MenuItem_Click_Save"/>
                     <Separator/>
 
