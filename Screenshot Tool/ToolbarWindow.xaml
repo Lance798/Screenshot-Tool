@@ -5,8 +5,31 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Screenshot_Tool"
         mc:Ignorable="d"
-        Title="ToolbarWindow" Height="450" Width="800">
+        Title="ToolbarWindow" Height="20" Width="120" ShowInTaskbar="False" WindowStyle="None" Visibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Disabled" Foreground="#00000000" Background="White" ResizeMode="NoResize">
     <Grid>
-        
+        <Button ToolTip="掃描QRcode" HorizontalAlignment="Left" VerticalAlignment="Center" Click="OnQRcodeButtonClick"
+                Height="20" Width="20" Background="White" BorderBrush="White" Foreground="White" Margin="0,0,0,0">
+            <Image Source="pack://application:,,,/Resources/QRcode.png" Height="16" Width="16"/>
+        </Button>
+        <Button ToolTip="上傳到雲端" HorizontalAlignment="Left" VerticalAlignment="Center" Click="OnUploadButtonClick"
+                Height="20" Width="20" Background="White" BorderBrush="White" Foreground="White" Margin="20,0,0,0">
+            <Image Source="pack://application:,,,/Resources/upload.png" Height="16" Width="16"/>
+        </Button>
+        <Button ToolTip="傳送到小畫家" HorizontalAlignment="Left" VerticalAlignment="Center" Click="OnPaintButtonClick"
+                Height="20" Width="20" Background="White" BorderBrush="White" Foreground="White" Margin="40,0,0,0">
+            <Image Source="pack://application:,,,/Resources/painter.png" Height="16" Width="16"/>
+        </Button>
+        <Button ToolTip="儲存到..." HorizontalAlignment="Left" VerticalAlignment="Center" Click="OnSaveButtonClick"
+                Height="20" Width="20" Background="White" BorderBrush="White" Foreground="White" Margin="60,0,0,0">
+            <Image Source="pack://application:,,,/Resources/save.png" Height="16" Width="16"/>
+        </Button>
+        <Button ToolTip="複製到剪貼簿"  HorizontalAlignment="Left" VerticalAlignment="Center" Click="OnCopyButtonClick"
+                Height="20" Width="20" Background="White" BorderBrush="White" Foreground="White" Margin="80,0,0,0">
+            <Image Source="pack://application:,,,/Resources/copy.png" Height="16" Width="16"/>
+        </Button>
+        <Button ToolTip="關閉" HorizontalAlignment="Left" VerticalAlignment="Center" Click="OnCloseButtonClick"
+                Height="20" Width="20" Background="White" BorderBrush="White" Foreground="White" Margin="100,0,0,0">
+            <Image Source="pack://application:,,,/Resources/close.png" Height="16" Width="16"/>
+        </Button>
     </Grid>
 </Window>
