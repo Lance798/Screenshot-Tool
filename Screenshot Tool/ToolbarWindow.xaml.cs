@@ -24,7 +24,8 @@ namespace Screenshot_Tool
         COPY,
         UPLOAD,
         PAINT,
-        QRCODE
+        QRCODE,
+        SEARCH
     }
 
     public partial class ToolbarWindow : Window
@@ -33,6 +34,15 @@ namespace Screenshot_Tool
         public ToolbarWindow()
         {
             InitializeComponent();
+        }
+
+        private void OnSearchButtonClick(Object sender, RoutedEventArgs e)
+        {
+            ButtonPressedEventArgs args = new ButtonPressedEventArgs()
+            {
+                Button = Buttons.SEARCH
+            };
+            OnButtonPressed(args);
         }
 
         private void OnQRcodeButtonClick(Object sender, RoutedEventArgs e)
@@ -89,11 +99,7 @@ namespace Screenshot_Tool
 
         private void OnButtonPressed(ButtonPressedEventArgs args)
         {
-            ButtonPressedEventHandler handler = ButtonPressedHandler;
-            if (handler != null)
-            {
-                handler(this, args);
-            }
+            ButtonPressedHandler?.Invoke(this, args);
         }
     }
 
