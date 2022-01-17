@@ -128,6 +128,11 @@ namespace Screenshot_Tool
                 _disposed = true;
             }
         }
+
+        public static implicit operator Key(HotKey v)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     // ******************************************************************

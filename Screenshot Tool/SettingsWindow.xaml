@@ -5,8 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Screenshot_Tool"
         mc:Ignorable="d"
-        Title="SettingsWindow" Height="450" Width="800">
-    <Grid>
-        
+        ResizeMode="NoResize"
+        Title="選項" Height="180" Width="390">
+    <Grid Margin="0,0,0,0">
+        <Label Content="截圖快捷鍵" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="TextBox_HotKey" HorizontalAlignment="Left" Margin="135,14,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" PreviewKeyDown="TextBox_Hot_Key_PreviewKeyDown"/>
+        <Button x:Name="Button_OK" Content="確定" HorizontalAlignment="Left" Margin="219,111,0,0" VerticalAlignment="Top" Click="Button_OK_Click" Width="58"/>
+        <Label Content="預設儲存路徑" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top"/>
+
+        <Button x:Name="Button_Cancel" Content="取消" HorizontalAlignment="Left" Margin="297,111,0,0" VerticalAlignment="Top" Click="Button_Cancel_Click" Width="58"/>
+        <Button x:Name="Button_Browse" Content="..." HorizontalAlignment="Left" Margin="343,38,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.922,1.124" Click="Button_Browse_Click"/>
+        <TextBox x:Name="TextBox_FolderPath" HorizontalAlignment="Left" Margin="135,39,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="203" Height="17" Panel.ZIndex="1"/>
+        <CheckBox x:Name="CheckBox_RunOnBoot" Content="開機後啟動程式" HorizontalAlignment="Left" Margin="10,111,0,0" VerticalAlignment="Top" Checked="CheckBox_RunOnBoot_OnChange" Unchecked="CheckBox_RunOnBoot_OnChange"/>
     </Grid>
 </Window>

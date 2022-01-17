@@ -32,14 +32,9 @@ namespace Screenshot_Tool
 
         public MainWindow()
         {
-            /*Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-            Assembly curAssembly = Assembly.GetExecutingAssembly();
-            key.SetValue(curAssembly.GetName().Name, curAssembly.Location); 
-            key.DeleteValue(curAssembly.GetName().Name, false);
-            key.Close();*/
             InitializeComponent();
             ContextMenu contextMenu = new ContextMenu();
-            contextMenu.MenuItems.Add("設定");
+            contextMenu.MenuItems.Add("設定", OpenSettings);
             contextMenu.MenuItems.Add("-");
             contextMenu.MenuItems.Add("退出程式", OnClikExit);
 
@@ -50,16 +45,40 @@ namespace Screenshot_Tool
                 Text = "擷取視窗螢幕",
                 ContextMenu = contextMenu
             };
-            notifyIcon.MouseClick += OnClickNotifyIcon;
+
             Hide();
             ShowInTaskbar = false;
             KeyDown += KeyboardHandler;
-            HotKey _hotKey = new HotKey(Key.F8, 0, OnHotKeyDown);
+            RegisterHotKey();
 
             toolbarWindow = new ToolbarWindow();
             toolbarWindow.ButtonPressedHandler += OnToolButtonClick;
             toolbarWindow.Visibility = Visibility.Hidden;
             toolbarWindow.KeyDown += KeyboardHandler;
+
+            Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+            Assembly curAssembly = Assembly.GetExecutingAssembly();
+            if(Properties.Settings.Default.RunOnBoot)
+                key.SetValue(curAssembly.GetName().Name, curAssembly.Location); 
+            else
+                key.DeleteValue(curAssembly.GetName().Name, false);
+            key.Close();
+        }
+
+        private void OpenSettings(object sender, EventArgs e)
+        {
+            SettingsWindow settings = new SettingsWindow();
+            settings.Show();
+        }
+
+        public void RegisterHotKey()
+        {
+            string[] a = Properties.Settings.Default.HotKey.Split('+');
+            Enum.TryParse(a[0], out Key hotKey);
+            KeyModifier modifier = 0;
+            if (a.Length > 1)
+                Enum.TryParse(a[1], out modifier);
+            HotKey _hotKey = new HotKey(hotKey, modifier, OnHotKeyDown);
         }
 
         private void OnToolButtonClick(object sender, ButtonPressedEventArgs e)
@@ -79,20 +98,15 @@ namespace Screenshot_Tool
                     Func_OpenMSPaint();
                     break;
                 case Buttons.SAVE:
-                    Func_Save();
+                    Func_SaveImage();
                     break;
                 case Buttons.COPY:
-                    Func_Copy();
+                    Func_CopyImage();
                     break;
                 case Buttons.CLOSE:
                     Func_CloseScreenshot();
                     break;
             }
-        }
-
-        private void OnClickNotifyIcon(object sender, System.Windows.Forms.MouseEventArgs e)
-        {
-            Func_Screenshot();
         }
 
         private void OnClikExit(object sender, EventArgs e)
@@ -105,9 +119,9 @@ namespace Screenshot_Tool
             if (e.Key == Key.Escape)
                 Func_CloseScreenshot();
             else if (e.Key == Key.C && Keyboard.IsKeyDown(Key.LeftCtrl))
-                Func_Copy();
+                Func_CopyImage();
             else if (e.Key == Key.S && Keyboard.IsKeyDown(Key.LeftCtrl))
-                Func_Save();
+                Func_SaveImage();
         }
 
         private void OnHotKeyDown(HotKey obj) { Func_Screenshot(); }
@@ -207,9 +221,9 @@ namespace Screenshot_Tool
             return newBMP;
         }
 
-        private void MenuItem_Click_Save(object sender, RoutedEventArgs e) { Func_Save(); }
+        private void MenuItem_Click_Save(object sender, RoutedEventArgs e) { Func_SaveImage(); }
 
-        private void MenuItem_Click_Copy(object sender, RoutedEventArgs e)  { Func_Copy(); }
+        private void MenuItem_Click_Copy(object sender, RoutedEventArgs e)  { Func_CopyImage(); }
 
         private Bitmap GetSelectedArea()
         {
@@ -293,9 +307,9 @@ namespace Screenshot_Tool
             Show();
         }
 
-        private void Func_Copy()
+        private void Func_CopyImage()
         {
-            Bitmap bmp = null;
+            Bitmap bmp;
             try
             {
                 bmp = GetSelectedArea();
@@ -311,9 +325,9 @@ namespace Screenshot_Tool
             bmp.Dispose();
             Func_CloseScreenshot();
         }
-        private void Func_Save()
+        private void Func_SaveImage()
         {
-            Bitmap bmp = null;
+            Bitmap bmp;
             try
             {
                 bmp = GetSelectedArea();
@@ -326,12 +340,25 @@ namespace Screenshot_Tool
             }
             SaveFileDialog dialog = new SaveFileDialog
             {
-                FileName = DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss") + ".png",
-                Filter = "圖片檔PNG (*.png)|*.png"
+                FileName = DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss"),
+                Filter = "PNG (*.png)|*.png|JPEG (*jpg)|*.jpg|BMP (*bmp)|*.bmp",
+                InitialDirectory = Properties.Settings.Default.SavePath
+                
             };
             if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                bmp.Save(dialog.FileName, ImageFormat.Png);
+                switch (dialog.FilterIndex)
+                {
+                    case 1:
+                        bmp.Save(dialog.FileName, ImageFormat.Png);
+                        break;
+                    case 2:
+                        bmp.Save(dialog.FileName, ImageFormat.Jpeg);
+                        break;
+                    case 3:
+                        bmp.Save(dialog.FileName, ImageFormat.Bmp);
+                        break;
+                }
                 notifyIcon.ShowBalloonTip(1000, "螢幕截圖工具", "已儲存到路徑：" + dialog.FileName, ToolTipIcon.None);
             }
             bmp.Dispose();
@@ -340,7 +367,7 @@ namespace Screenshot_Tool
 
         private void Func_OpenMSPaint()
         {
-            Bitmap bmp = null;
+            Bitmap bmp;
             try
             {
                 bmp = GetSelectedArea();
@@ -378,7 +405,7 @@ namespace Screenshot_Tool
 
         private void Func_ScanQRcode()
         {
-            Bitmap bmp = null;
+            Bitmap bmp;
             try
             {
                 bmp = GetSelectedArea();
