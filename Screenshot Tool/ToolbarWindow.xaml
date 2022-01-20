@@ -9,7 +9,7 @@
     <Grid>
         <Button ToolTip="搜尋類似圖片" HorizontalAlignment="Left" VerticalAlignment="Center" Click="OnSearchButtonClick"
                 Height="20" Width="20" Background="White" BorderBrush="White" Foreground="White" Margin="0,0,0,0">
-            <Image Source="pack://application:,,,/Resources/google.png" Height="16" Width="16"/>
+            <Image Source="pack://application:,,,/Resources/search.png" Height="16" Width="16"/>
         </Button>
         <Button ToolTip="掃描QRcode" HorizontalAlignment="Left" VerticalAlignment="Center" Click="OnQRcodeButtonClick"
                 Height="20" Width="20" Background="White" BorderBrush="White" Foreground="White" Margin="20,0,0,0">

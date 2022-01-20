@@ -52,6 +52,8 @@ namespace Screenshot_Tool
         {
             Properties.Settings.Default.Save();
             MessageBox.Show("請重開程式讓設定生效");
+            //System.Diagnostics.Process.Start(System.Windows.Application.ResourceAssembly.Location);
+            //System.Windows.Application.Current.Shutdown();
             Close();
         }
 

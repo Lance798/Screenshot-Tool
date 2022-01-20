@@ -15,6 +15,8 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <IsWebBootstrapper>false</IsWebBootstrapper>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
     <PublishUrl>C:\Users\user\Desktop\Screenshot Tool\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -25,7 +27,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>3</ApplicationRevision>
+    <ApplicationRevision>9</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -69,59 +71,14 @@
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Babel.Licensing, Version=2.8.8.0, Culture=neutral, PublicKeyToken=138d17b5bd621ab7, processorArchitecture=MSIL">
-      <HintPath>..\packages\BarCode.2021.12.21\lib\net40\Babel.Licensing.dll</HintPath>
+    <Reference Include="BarcodeLib.BarcodeReader">
+      <HintPath>..\..\..\..\Desktop\BarcodeLib.BarcodeReader.dll</HintPath>
     </Reference>
-    <Reference Include="BitMiracle.LibTiff.NET, Version=2.4.638.0, Culture=neutral, PublicKeyToken=53879b3e20e7a7d6, processorArchitecture=MSIL">
-      <HintPath>..\packages\BarCode.2021.12.21\lib\net40\BitMiracle.LibTiff.NET.dll</HintPath>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.6.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
-    <Reference Include="BouncyCastle.Crypto, Version=1.8.10.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
-      <HintPath>..\packages\BarCode.2021.12.21\lib\net40\BouncyCastle.Crypto.dll</HintPath>
-    </Reference>
-    <Reference Include="DotNetZip, Version=1.15.0.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL">
-      <HintPath>..\packages\BarCode.2021.12.21\lib\net40\DotNetZip.dll</HintPath>
-    </Reference>
-    <Reference Include="IronBarCode, Version=2021.12.0.21, Culture=neutral, PublicKeyToken=b971bb3971bdf306, processorArchitecture=MSIL">
-      <HintPath>..\packages\BarCode.2021.12.21\lib\net40\IronBarCode.dll</HintPath>
-    </Reference>
-    <Reference Include="IronPdf.Pdfium, Version=1.0.0.4471, Culture=neutral, PublicKeyToken=212d70e9efeae4c7, processorArchitecture=MSIL">
-      <HintPath>..\packages\BarCode.2021.12.21\lib\net40\IronPdf.Pdfium.dll</HintPath>
-    </Reference>
-    <Reference Include="IronPdf.Pdfium.Domain, Version=1.0.0.4471, Culture=neutral, PublicKeyToken=94e1c31412563c75, processorArchitecture=MSIL">
-      <HintPath>..\packages\BarCode.2021.12.21\lib\net40\IronPdf.Pdfium.Domain.dll</HintPath>
-    </Reference>
-    <Reference Include="IronSoftware.Analytics, Version=1.0.0.4471, Culture=neutral, PublicKeyToken=212d70e9efeae4c7, processorArchitecture=MSIL">
-      <HintPath>..\packages\BarCode.2021.12.21\lib\net40\IronSoftware.Analytics.dll</HintPath>
-    </Reference>
-    <Reference Include="IronSoftware.Common, Version=1.0.0.4471, Culture=neutral, PublicKeyToken=212d70e9efeae4c7, processorArchitecture=MSIL">
-      <HintPath>..\packages\BarCode.2021.12.21\lib\net40\IronSoftware.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="IronSoftware.Deployment, Version=1.0.0.4471, Culture=neutral, PublicKeyToken=212d70e9efeae4c7, processorArchitecture=MSIL">
-      <HintPath>..\packages\BarCode.2021.12.21\lib\net40\IronSoftware.Deployment.dll</HintPath>
-    </Reference>
-    <Reference Include="IronSoftware.IronConfigurationManager, Version=1.0.0.4471, Culture=neutral, PublicKeyToken=212d70e9efeae4c7, processorArchitecture=MSIL">
-      <HintPath>..\packages\BarCode.2021.12.21\lib\net40\IronSoftware.IronConfigurationManager.dll</HintPath>
-    </Reference>
-    <Reference Include="IronSoftware.Licenses, Version=1.0.0.4471, Culture=neutral, PublicKeyToken=212d70e9efeae4c7, processorArchitecture=MSIL">
-      <HintPath>..\packages\BarCode.2021.12.21\lib\net40\IronSoftware.Licenses.dll</HintPath>
-    </Reference>
-    <Reference Include="IronSoftware.Logger, Version=1.0.0.4471, Culture=neutral, PublicKeyToken=212d70e9efeae4c7, processorArchitecture=MSIL">
-      <HintPath>..\packages\BarCode.2021.12.21\lib\net40\IronSoftware.Logger.dll</HintPath>
-    </Reference>
-    <Reference Include="IronSoftware.Standard.Aforge, Version=1.0.0.4471, Culture=neutral, PublicKeyToken=212d70e9efeae4c7, processorArchitecture=MSIL">
-      <HintPath>..\packages\BarCode.2021.12.21\lib\net40\IronSoftware.Standard.Aforge.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.5.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="NativeLibraryLoader, Version=1.0.12.0, Culture=neutral, PublicKeyToken=212d70e9efeae4c7, processorArchitecture=MSIL">
-      <HintPath>..\packages\BarCode.2021.12.21\lib\net40\NativeLibraryLoader.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\BarCode.2021.12.21\lib\net40\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="PdfSharp, Version=1.51.5185.0, Culture=neutral, PublicKeyToken=94e1c31412563c75, processorArchitecture=MSIL">
-      <HintPath>..\packages\BarCode.2021.12.21\lib\net40\PdfSharp.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -137,14 +94,14 @@
     <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
     </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.5.0.0\lib\net45\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
-    <Reference Include="System.Text.Encodings.Web, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Text.Encodings.Web.5.0.0\lib\net461\System.Text.Encodings.Web.dll</HintPath>
+    <Reference Include="System.Text.Encodings.Web, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encodings.Web.6.0.0\lib\net461\System.Text.Encodings.Web.dll</HintPath>
     </Reference>
-    <Reference Include="System.Text.Json, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Text.Json.5.0.0\lib\net461\System.Text.Json.dll</HintPath>
+    <Reference Include="System.Text.Json, Version=6.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Json.6.0.1\lib\net461\System.Text.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
@@ -166,12 +123,6 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="zxing, Version=0.16.6.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
-      <HintPath>..\packages\BarCode.2021.12.21\lib\net40\zxing.dll</HintPath>
-    </Reference>
-    <Reference Include="zxing.presentation, Version=0.16.6.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
-      <HintPath>..\packages\BarCode.2021.12.21\lib\net40\zxing.presentation.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -231,12 +182,16 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="References.md" />
     <None Include="Screenshot Tool_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\search.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\upload.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
@@ -246,16 +201,13 @@
     <Resource Include="Resources\save.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\copy.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
     <Resource Include="Resources\painter.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\QRcode.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\google.png">
+    <Resource Include="Resources\copy.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Content Include="Resources\screenshot.ico">
@@ -275,4 +227,11 @@
     </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\System.Text.Json.6.0.1\build\System.Text.Json.targets" Condition="Exists('..\packages\System.Text.Json.6.0.1\build\System.Text.Json.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\System.Text.Json.6.0.1\build\System.Text.Json.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Text.Json.6.0.1\build\System.Text.Json.targets'))" />
+  </Target>
 </Project>

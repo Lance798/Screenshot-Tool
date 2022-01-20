@@ -1,5 +1,5 @@
-﻿using IronBarCode;
-using Newtonsoft.Json.Linq;
+﻿using BarcodeLib.BarcodeReader;
+using Newtonsoft.Json;
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -56,13 +56,13 @@ namespace Screenshot_Tool
             toolbarWindow.Visibility = Visibility.Hidden;
             toolbarWindow.KeyDown += KeyboardHandler;
 
-            Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+            /*Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
             Assembly curAssembly = Assembly.GetExecutingAssembly();
             if(Properties.Settings.Default.RunOnBoot)
                 key.SetValue(curAssembly.GetName().Name, curAssembly.Location); 
             else
                 key.DeleteValue(curAssembly.GetName().Name, false);
-            key.Close();
+            key.Close();*/
         }
 
         private void OpenSettings(object sender, EventArgs e)
@@ -89,7 +89,13 @@ namespace Screenshot_Tool
                     Func_SearchImage();
                     break;
                 case Buttons.QRCODE:
-                    Func_ScanQRcode();
+                    try
+                    {
+                        Func_ScanQRcode();
+                    }catch(Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
                     break;
                 case Buttons.UPLOAD:
                     Func_UploadImage();
@@ -169,7 +175,6 @@ namespace Screenshot_Tool
                 builder.Append("x");
                 builder.Append(rectangle.Height.ToString());
                 labelSize.Content = builder.ToString();
-                //labelSize.Content = string.Format("{0}x{1}", rectangle.Width, rectangle.Height);
                 labelSize.Margin = rectangle.Margin; 
             }
         }
@@ -271,7 +276,7 @@ namespace Screenshot_Tool
             {
                 StreamReader reader = new StreamReader(dataStream);
                 string responseFromServer = reader.ReadToEnd();
-                dynamic json = JObject.Parse(responseFromServer);
+                dynamic json = JsonConvert.DeserializeObject(responseFromServer);
                 url = json.image.url;
             }
             response.Close();
@@ -417,13 +422,13 @@ namespace Screenshot_Tool
                 return;
             }
 
-            BarcodeResult result = BarcodeReader.QuicklyReadOneBarcode(bmp);
+            string[] result = BarcodeReader.read(bmp, BarcodeReader.QRCODE);
             if (result == null)
                 MessageBox.Show("找不到QRcode", "錯誤", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
             {
-                System.Windows.Clipboard.SetData(System.Windows.DataFormats.Text, result.Text);
-                notifyIcon.ShowBalloonTip(1000, "螢幕截圖工具", "結果為：" + result.Text + "\n內容已複製到剪貼簿", ToolTipIcon.None);
+                System.Windows.Clipboard.SetData(System.Windows.DataFormats.Text, result[0]);
+                notifyIcon.ShowBalloonTip(1000, "螢幕截圖工具", "結果為：" + result[0] + "\n內容已複製到剪貼簿", ToolTipIcon.None);
             }
             bmp.Dispose();
             Func_CloseScreenshot();
