@@ -6,7 +6,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid MouseLeftButtonDown="ImageBox_mouseLeftButtonDown" MouseLeftButtonUp="ImageBox_mouseLeftButtonUp" MouseMove="ImageBox_mouseMove">
-        <Image x:Name="imageBox" HorizontalAlignment="Left" Margin="212,217,0,0" VerticalAlignment="Top" Panel.ZIndex="-5">
+        <Image x:Name="imgBox_Background" HorizontalAlignment="Left" Margin="212,217,0,0" VerticalAlignment="Top" Panel.ZIndex="-5">
 
             <Image.ContextMenu>
                 <ContextMenu>
@@ -21,6 +21,7 @@
                 </ContextMenu>
             </Image.ContextMenu>
         </Image>
+        <Image x:Name="imgBox_raw" HorizontalAlignment="Left" Margin="212,217,0,0" VerticalAlignment="Top" Panel.ZIndex="-4"/>
         <Rectangle x:Name="rectangle" HorizontalAlignment="Left" Height="0" Margin="212,164,0,0" Stroke="Black" VerticalAlignment="Top" Width="0" Panel.ZIndex="1"/>
         <Label x:Name="labelSize" Content="Label" HorizontalAlignment="Left" Margin="314,172,0,0" VerticalAlignment="Top" Panel.ZIndex="2" Background="#FF757070" Foreground="White" RenderTransformOrigin="0.5,0.5" FontSize="8" Visibility="Hidden"/>
     </Grid>

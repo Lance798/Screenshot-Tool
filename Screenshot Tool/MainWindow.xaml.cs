@@ -5,12 +5,11 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Net;
-using System.Reflection;
 using System.Text;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
-using System.Windows.Interop;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Control = System.Windows.Forms.Control;
 using MessageBox = System.Windows.Forms.MessageBox;
@@ -28,7 +27,7 @@ namespace Screenshot_Tool
         private readonly NotifyIcon notifyIcon;
         private bool isMouseDown;
         private int startX, startY;
-        private Bitmap screenBMP, imageBoxBMP;
+        private Bitmap bmp_raw, bmp_Background;
 
         public MainWindow()
         {
@@ -115,10 +114,7 @@ namespace Screenshot_Tool
             }
         }
 
-        private void OnClikExit(object sender, EventArgs e)
-        {
-            Func_Exit();
-        }
+        private void OnClikExit(object sender, EventArgs e) { Func_Exit(); }
 
         private void KeyboardHandler(object sender, System.Windows.Input.KeyEventArgs e)
         {
@@ -161,16 +157,22 @@ namespace Screenshot_Tool
                 double currentY = Control.MousePosition.Y;
                 double rectWidth = currentX - startX;
                 double rectHeight = currentY - startY;
+                if (rectHeight == 0 || rectWidth == 0)
+                    return;
                 rectangle.Margin = new Thickness(rectWidth >= 0 ? startX : currentX, rectHeight >= 0 ? startY : currentY, 0, 0);
                 rectangle.Width = Math.Abs(rectWidth);
                 rectangle.Height = Math.Abs(rectHeight);
-                Point p = rectangle.TransformToAncestor(this).Transform(new Point(0, 0));
-                Bitmap bmp = ReplaceImage(imageBoxBMP, (int)p.X, (int)p.Y, (int)rectangle.Width, (int)rectangle.Height, screenBMP);
-                imageBox.Source = ConvertBitmap(bmp);
-                bmp.Dispose();
-                
-                if (rectHeight != 0 || rectWidth != 0)
-                    labelSize.Visibility = Visibility.Visible;
+
+                imgBox_raw.Clip = new RectangleGeometry
+                {
+                    Rect = new Rect(
+                        rectangle.Margin.Left,
+                        rectangle.Margin.Top,
+                        rectangle.Width,
+                        rectangle.Height)
+                };
+
+                labelSize.Visibility = Visibility.Visible;
                 StringBuilder builder = new StringBuilder(rectangle.Width.ToString());
                 builder.Append("x");
                 builder.Append(rectangle.Height.ToString());
@@ -210,22 +212,6 @@ namespace Screenshot_Tool
             return bm;
         }
 
-        private Bitmap ReplaceImage(Bitmap image, int x, int y, int width, int height, Bitmap imageSource)
-        {
-            Bitmap newBMP = (Bitmap)image.Clone();
-            Rectangle rect = new Rectangle(x, y, width, height);
-            try
-            {
-                Bitmap source = imageSource.Clone(rect, imageSource.PixelFormat);
-                Graphics g = Graphics.FromImage(newBMP);
-                g.DrawImage(source, new PointF(x, y));
-                g.Dispose();
-                source.Dispose();
-            }
-            catch { }
-            return newBMP;
-        }
-
         private void MenuItem_Click_Save(object sender, RoutedEventArgs e) { Func_SaveImage(); }
 
         private void MenuItem_Click_Copy(object sender, RoutedEventArgs e)  { Func_CopyImage(); }
@@ -234,7 +220,7 @@ namespace Screenshot_Tool
         {
             Point p = rectangle.TransformToAncestor(this).Transform(new Point(0, 0));
             Rectangle rect = new Rectangle((int)p.X, (int)p.Y, (int)rectangle.Width, (int)rectangle.Height);
-            Bitmap bmp = screenBMP.Clone(rect, screenBMP.PixelFormat);
+            Bitmap bmp = bmp_raw.Clone(rect, bmp_raw.PixelFormat);
             return bmp;
         }
 
@@ -291,20 +277,24 @@ namespace Screenshot_Tool
         {
             isMouseDown = false;
             Rectangle rect = Screen.GetBounds(System.Drawing.Point.Empty);
-            screenBMP = new Bitmap(rect.Width, rect.Height, PixelFormat.Format32bppArgb);
-            Graphics g = Graphics.FromImage(screenBMP);
-            g.CopyFromScreen(rect.Left, rect.Top, 0, 0, screenBMP.Size, CopyPixelOperation.SourceCopy);
-            imageBoxBMP = (Bitmap)screenBMP.Clone();
-            imageBoxBMP = AdjustBrightness(imageBoxBMP, (float)0.5);
-            BitmapSource bitmapSource = Imaging.CreateBitmapSourceFromHBitmap(imageBoxBMP.GetHbitmap(),
-                                                IntPtr.Zero,
-                                                Int32Rect.Empty,
-                                                BitmapSizeOptions.FromEmptyOptions());
+            bmp_raw = new Bitmap(rect.Width, rect.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            Graphics g = Graphics.FromImage(bmp_raw);
+            g.CopyFromScreen(rect.Left, rect.Top, 0, 0, bmp_raw.Size, CopyPixelOperation.SourceCopy);
+            bmp_Background = (Bitmap)bmp_raw.Clone();
+            bmp_Background = AdjustBrightness(bmp_Background, (float)0.5);
 
-            imageBox.Margin = new Thickness(0);
-            imageBox.Width = bitmapSource.Width;
-            imageBox.Height = bitmapSource.Height;
-            imageBox.Source = bitmapSource;
+            BitmapImage bitmapImage = ConvertBitmap(bmp_Background);
+            imgBox_Background.Margin = new Thickness(0);
+            imgBox_Background.Width = bitmapImage.Width;
+            imgBox_Background.Height = bitmapImage.Height;
+            imgBox_Background.Source = bitmapImage;
+
+            imgBox_raw.Margin = new Thickness(0);
+            imgBox_raw.Width = bitmapImage.Width;
+            imgBox_raw.Height = bitmapImage.Height;
+            imgBox_raw.Source = ConvertBitmap(bmp_raw);
+            imgBox_raw.Clip = new RectangleGeometry { Rect = new Rect(0, 0, 0, 0) };
+
             WindowState = WindowState.Maximized;
             WindowStyle = WindowStyle.None;
             rectangle.Width = 0;
@@ -386,6 +376,7 @@ namespace Screenshot_Tool
             string path = Path.GetTempPath() + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss") + ".png";
             bmp.Save(path);
             System.Diagnostics.Process.Start("mspaint.exe", path);
+            bmp.Dispose();
             Func_CloseScreenshot();
         }
 
@@ -405,6 +396,7 @@ namespace Screenshot_Tool
             string url = UploadImageToCloud(bmp);
             System.Windows.Clipboard.SetData(System.Windows.DataFormats.Text, url);
             notifyIcon.ShowBalloonTip(1000, "螢幕截圖工具", "已上傳到網址：" + url + "\n連結已複製到剪貼簿", ToolTipIcon.None);
+            bmp.Dispose();
             Func_CloseScreenshot();
         }
 
@@ -450,6 +442,7 @@ namespace Screenshot_Tool
             StringBuilder builder = new StringBuilder("https://www.google.com/searchbyimage?&image_url=");
             builder.Append(UploadImageToCloud(bmp));
             System.Diagnostics.Process.Start(builder.ToString());
+            bmp.Dispose();
             Func_CloseScreenshot();
         }
 
@@ -458,9 +451,9 @@ namespace Screenshot_Tool
             toolbarWindow.Visibility = Visibility.Hidden;
             Hide();
             labelSize.Visibility = Visibility.Hidden;
-            imageBox.ContextMenu.IsOpen = false;
-            screenBMP.Dispose();
-            imageBoxBMP.Dispose();
+            imgBox_Background.ContextMenu.IsOpen = false;
+            bmp_raw.Dispose();
+            bmp_Background.Dispose();
         }
     }
 }
