@@ -270,6 +270,7 @@ namespace Screenshot_Tool
         }
         private void Func_Exit()
         {
+            notifyIcon.ShowBalloonTip(1000, "螢幕截圖工具", "已退出程式", ToolTipIcon.None);
             System.Windows.Application.Current.Shutdown();
         }
 

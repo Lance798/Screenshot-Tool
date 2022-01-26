@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:Screenshot_Tool"
         mc:Ignorable="d"
         ResizeMode="NoResize"
+        Icon="pack://application:,,,/Resources/screenshot.ico"
         Title="選項" Height="180" Width="390">
     <Grid Margin="0,0,0,0">
         <Label Content="截圖快捷鍵" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>

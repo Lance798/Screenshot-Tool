@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
+        Icon="pack://application:,,,/Resources/screenshot.ico"
         Title="MainWindow" Height="450" Width="800">
     <Grid MouseLeftButtonDown="ImageBox_mouseLeftButtonDown" MouseLeftButtonUp="ImageBox_mouseLeftButtonUp" MouseMove="ImageBox_mouseMove">
         <Image x:Name="imgBox_Background" HorizontalAlignment="Left" Margin="212,217,0,0" VerticalAlignment="Top" Panel.ZIndex="-5">
