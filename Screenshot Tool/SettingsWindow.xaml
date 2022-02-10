@@ -17,6 +17,6 @@
         <Button x:Name="Button_Cancel" Content="取消" HorizontalAlignment="Left" Margin="297,111,0,0" VerticalAlignment="Top" Click="Button_Cancel_Click" Width="58"/>
         <Button x:Name="Button_Browse" Content="..." HorizontalAlignment="Left" Margin="343,38,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.922,1.124" Click="Button_Browse_Click"/>
         <TextBox x:Name="TextBox_FolderPath" HorizontalAlignment="Left" Margin="135,39,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="203" Height="17" Panel.ZIndex="1"/>
-        <CheckBox x:Name="CheckBox_RunOnBoot" Content="開機後啟動程式" HorizontalAlignment="Left" Margin="10,111,0,0" VerticalAlignment="Top" Checked="CheckBox_RunOnBoot_OnChange" Unchecked="CheckBox_RunOnBoot_OnChange"/>
+        <!--<CheckBox x:Name="CheckBox_RunOnBoot" Content="開機後啟動程式" HorizontalAlignment="Left" Margin="10,111,0,0" VerticalAlignment="Top" Checked="CheckBox_RunOnBoot_OnChange" Unchecked="CheckBox_RunOnBoot_OnChange"/>-->
     </Grid>
 </Window>

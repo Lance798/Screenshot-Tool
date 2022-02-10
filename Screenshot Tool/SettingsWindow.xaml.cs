@@ -16,7 +16,6 @@ namespace Screenshot_Tool
             InitializeComponent();
             TextBox_HotKey.Text = Properties.Settings.Default.HotKey;
             TextBox_FolderPath.Text = Properties.Settings.Default.SavePath;
-            CheckBox_RunOnBoot.IsChecked = Properties.Settings.Default.RunOnBoot;
         }
 
         private void TextBox_Hot_Key_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -43,10 +42,6 @@ namespace Screenshot_Tool
             Properties.Settings.Default.SavePath = dialog.SelectedPath;
         }
 
-        private void CheckBox_RunOnBoot_OnChange(object sender, RoutedEventArgs e)
-        {
-            Properties.Settings.Default.RunOnBoot = (bool)CheckBox_RunOnBoot.IsChecked;
-        }
 
         private void Button_OK_Click(object sender, RoutedEventArgs e)
         {

@@ -212,10 +212,6 @@ namespace Screenshot_Tool
             return bm;
         }
 
-        private void MenuItem_Click_Save(object sender, RoutedEventArgs e) { Func_SaveImage(); }
-
-        private void MenuItem_Click_Copy(object sender, RoutedEventArgs e)  { Func_CopyImage(); }
-
         private Bitmap GetSelectedArea()
         {
             Point p = rectangle.TransformToAncestor(this).Transform(new Point(0, 0));
@@ -452,7 +448,6 @@ namespace Screenshot_Tool
             toolbarWindow.Visibility = Visibility.Hidden;
             Hide();
             labelSize.Visibility = Visibility.Hidden;
-            imgBox_Background.ContextMenu.IsOpen = false;
             bmp_raw.Dispose();
             bmp_Background.Dispose();
         }
